@@ -72,6 +72,7 @@ public class SortAndDisplay {
         return inFile;
 	}
 
+	@SuppressWarnings("unused")
 	private static File getFileWithInput() {
     	
     	System.out.println("Please give the name of the input file");

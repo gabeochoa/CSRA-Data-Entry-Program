@@ -48,7 +48,7 @@ public class CSRA {
     private JTextField researchEntry = new JTextField(20);
     private JTextField majorEntry = new JTextField(20);
     private JTextField langEntry = new JTextField(20);
-    private JTextArea prevEntry = new JTextArea(2,1);
+    //private JTextArea prevEntry = new JTextArea(2,1);
     
     private JTextField hourEntry = new JTextField(4);
     
@@ -60,7 +60,9 @@ public class CSRA {
     private int HEIGHT = 300;
 	private Dimension size;
 
+	@SuppressWarnings("unused")
 	private PrintWriter out;
+	
     private CSRA(PrintWriter out) {
     	this.out = out;
     	
