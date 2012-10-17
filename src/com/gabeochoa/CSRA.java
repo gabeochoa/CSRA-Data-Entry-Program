@@ -54,12 +54,15 @@ public class CSRA {
     
     private JButton clearData = new JButton("Clear this Data");
     private JButton saveData = new JButton("Save this Data");
+    private JButton sortData = new JButton("Sort the Data");
 
     private int WIDTH = 600;
     private int HEIGHT = 300;
 	private Dimension size;
 
+	private PrintWriter out;
     private CSRA(PrintWriter out) {
+    	this.out = out;
     	
     	size = new Dimension(WIDTH, HEIGHT);
     	frame.setSize(size);
@@ -137,6 +140,10 @@ public class CSRA {
         
         panel.add(clearData);
         clearData.addActionListener(new ClearListener());
+        
+        panel.add(sortData);
+        sortData.addActionListener(new SortListener());
+        
         return panel;
     }
    
@@ -145,9 +152,6 @@ public class CSRA {
             public void run() {
                 FileOutputStream outfile;
                 try {
-                	
-                	//String in = JOptionPane.showInputDialog(null,"What would you like to name the file?");
-                	//outfile = new FileOutputStream("./files/"+in+".csv", true);
                 	
                 	outfile = new FileOutputStream("Data.csv", true);
                     PrintWriter output = new PrintWriter(outfile);
@@ -189,6 +193,19 @@ public class CSRA {
             hourEntry.setText("");     
         }
     }
+    
+    private class SortListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            try {
+            	SortAndDisplay.main(null);
+            	JOptionPane.showMessageDialog (frame, "Sorting Complete", " ", JOptionPane.OK_OPTION); 
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog (frame, "File not sorted correctly", " ", JOptionPane.OK_OPTION); 
+			}
+        }
+    }
+    
     private class SaveListener implements ActionListener {
         PrintWriter out;
         public SaveListener(PrintWriter out) {
@@ -237,7 +254,19 @@ public class CSRA {
                 
                 out.println(bldr);
                 
-                JOptionPane.showMessageDialog (frame, "File Saved", " ", JOptionPane.OK_OPTION); 
+                JOptionPane.showMessageDialog (frame, "File Saved\n File will update on close", "", JOptionPane.OK_OPTION); 
+                
+                out.close();
+                
+                FileOutputStream outfile;
+                try {
+                	
+                	outfile = new FileOutputStream("Data.csv", true);
+                    PrintWriter output = new PrintWriter(outfile);
+                    out = output;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 
             } catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog (frame,
